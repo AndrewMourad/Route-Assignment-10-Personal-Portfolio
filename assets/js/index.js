@@ -35,3 +35,54 @@ themeToggle.addEventListener("click", function () {
 if (localStorage.getItem("theme") === "light") {
   document.documentElement.classList.remove("dark");
 }
+
+var filterBtns = document.querySelectorAll(".portfolio-filter");
+var portfolioItems = document.querySelectorAll(".portfolio-item");
+
+for (let i = 0; i < filterBtns.length; i++) {
+  filterBtns[i].addEventListener("click", function () {
+    var selectedFilter = this.getAttribute("data-filter");
+    for (let j = 0; j < filterBtns.length; j++) {
+      filterBtns[j].classList.remove(
+        "bg-linear-to-r",
+        "from-primary",
+        "to-secondary",
+        "text-white",
+        "active",
+      );
+      filterBtns[j].classList.add(
+        "bg-white",
+        "dark:bg-slate-800",
+        "text-slate-600",
+        "dark:text-slate-300",
+        "border",
+        "border-slate-300",
+        "dark:border-slate-700",
+      );
+    }
+    this.classList.remove(
+      "bg-white",
+      "dark:bg-slate-800",
+      "text-slate-600",
+      "dark:text-slate-300",
+      "border",
+      "border-slate-300",
+      "dark:border-slate-700",
+    );
+    this.classList.add(
+      "bg-linear-to-r",
+      "from-primary",
+      "to-secondary",
+      "text-white",
+      "active",
+    );
+    for (let k = 0; k < portfolioItems.length; k++) {
+      var itemCategory = portfolioItems[k].getAttribute("data-category");
+      if (selectedFilter === "all" || itemCategory === selectedFilter) {
+        portfolioItems[k].style.display = "block";
+      } else {
+        portfolioItems[k].style.display = "none";
+      }
+    }
+  });
+}
