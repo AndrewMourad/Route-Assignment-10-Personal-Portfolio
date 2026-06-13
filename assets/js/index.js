@@ -86,3 +86,56 @@ for (let i = 0; i < filterBtns.length; i++) {
     }
   });
 }
+
+var carousel = document.getElementById("testimonials-carousel");
+var prevBtn = document.getElementById("prev-testimonial");
+var nextBtn = document.getElementById("next-testimonial");
+var indicators = document.querySelectorAll(".carousel-indicator");
+
+var currentIndex = 0;
+var totalSlides = 4;
+
+function updateCarousel() {
+  var translateValue = currentIndex * 33.333;
+  carousel.style.transform = `translateX(${translateValue}%)`;
+}
+
+function updateIndicators() {
+  for (var i = 0; i < indicators.length; i++) {
+    indicators[i].classList.remove("bg-accent");
+    indicators[i].classList.add("bg-slate-400", "dark:bg-slate-600");
+  }
+  indicators[currentIndex].classList.remove(
+    "bg-slate-400",
+    "dark:bg-slate-600",
+  );
+  indicators[currentIndex].classList.add("bg-accent");
+}
+
+nextBtn.addEventListener("click", function () {
+  if (currentIndex < totalSlides - 1) {
+    currentIndex++;
+  } else {
+    currentIndex = 0;
+  }
+  updateCarousel();
+  updateIndicators();
+});
+
+prevBtn.addEventListener("click", function () {
+  if (currentIndex > 0) {
+    currentIndex--;
+  } else {
+    currentIndex = totalSlides - 1;
+  }
+  updateCarousel();
+  updateIndicators();
+});
+
+for (var i = 0; i < indicators.length; i++) {
+  indicators[i].addEventListener("click", function () {
+    currentIndex = parseInt(this.getAttribute("data-index"));
+    updateCarousel();
+    updateIndicators();
+  });
+}
